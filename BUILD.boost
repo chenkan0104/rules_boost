@@ -9,6 +9,14 @@ config_setting(
 )
 
 config_setting(
+    name = "linux_aarch64",
+    constraint_values = [
+        "@bazel_tools//platforms:linux",
+    ],
+    values = {"cpu": "aarch64"},
+)
+
+config_setting(
     name = "windows_x86_64",
     constraint_values = [
         "@bazel_tools//platforms:windows",
@@ -22,6 +30,11 @@ BOOST_CTX_ASM_SOURCES = select({
         "libs/context/src/asm/make_x86_64_sysv_elf_gas.S",
         "libs/context/src/asm/ontop_x86_64_sysv_elf_gas.S",
     ],
+    ":linux_aarch64": [
+        "libs/context/src/asm/jump_arm64_aapcs_elf_gas.S",
+        "libs/context/src/asm/make_arm64_aapcs_elf_gas.S",
+        "libs/context/src/asm/ontop_arm64_aapcs_elf_gas.S",
+    ],
     ":windows_x86_64": [
         "libs/context/src/asm/make_x86_64_ms_pe_masm.asm",
         "libs/context/src/asm/jump_x86_64_ms_pe_masm.asm",
@@ -33,6 +46,9 @@ boost_library(
     name = "context",
     srcs = BOOST_CTX_ASM_SOURCES + select({
         ":linux_x86_64": [
+            "libs/context/src/posix/stack_traits.cpp",
+        ],
+        ":linux_aarch64": [
             "libs/context/src/posix/stack_traits.cpp",
         ],
         ":windows_x86_64": [
@@ -50,11 +66,16 @@ boost_library(
         ":cstdint",
         ":detail",
         ":intrusive_ptr",
+        ":thread",
     ],
 )
 
 BOOST_FIBER_NUMA_SRCS = select({
     ":linux_x86_64": [
+        "libs/fiber/src/numa/linux/pin_thread.cpp",
+        "libs/fiber/src/numa/linux/topology.cpp",
+    ],
+    ":linux_aarch64": [
         "libs/fiber/src/numa/linux/pin_thread.cpp",
         "libs/fiber/src/numa/linux/topology.cpp",
     ],
@@ -76,6 +97,9 @@ boost_library(
     exclude_src = ["libs/fiber/src/numa/**/*.cpp"],
     linkopts = select({
         ":linux_x86_64": [
+            "-lpthread",
+        ],
+        ":linux_aarch64": [
             "-lpthread",
         ],
         "//conditions:default": [],
@@ -183,6 +207,7 @@ boost_library(
         ":bind",
         ":date_time",
         ":regex",
+        ":coroutine",
     ],
 )
 
@@ -351,6 +376,9 @@ BOOST_CORO_SRCS = select({
     ":linux_x86_64": [
         "libs/coroutine/src/posix/stack_traits.cpp",
     ],
+    ":linux_aarch64": [
+        "libs/coroutine/src/posix/stack_traits.cpp",
+    ],
     ":windows_x86_64": [
         "libs/coroutine/src/windows/stack_traits.cpp",
     ],
@@ -361,6 +389,9 @@ boost_library(
     srcs = BOOST_CORO_SRCS + [
         "libs/coroutine/src/detail/coroutine_context.cpp",
         ],
+    defines = [
+        "BOOST_COROUTINES_NO_DEPRECATION_WARNING",
+    ],
     deps = [
         ":config",
         ":context",
@@ -369,6 +400,10 @@ boost_library(
         ":system",
         ":thread",
     ],
+)
+
+boost_library(
+    name = "coroutine2",
 )
 
 boost_library(
@@ -553,6 +588,9 @@ boost_library(
 
 boost_library(
     name = "xpressive",
+    copts = [
+        "-Wno-unused-value",
+    ],
     deps = [
         ":proto",
         ":intrusive_ptr",
