@@ -335,6 +335,9 @@ boost_library(
 
 boost_library(
     name = "conversion",
+    srcs = [
+        "boost/implicit_cast.hpp",
+    ],
 )
 
 boost_library(
@@ -538,6 +541,22 @@ boost_library(
         ":type_traits",
         ":typeof",
         ":utility",
+    ],
+)
+
+boost_library(
+    name = "proto",
+    deps = [
+        ":fusion",
+    ],
+)
+
+boost_library(
+    name = "xpressive",
+    deps = [
+        ":proto",
+        ":intrusive_ptr",
+        ":conversion",
     ],
 )
 
