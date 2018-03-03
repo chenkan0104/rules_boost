@@ -1371,9 +1371,6 @@ boost_library(
 
 boost_library(
     name = "numeric",
-    deps = [
-        ":typeof",
-    ],
 )
 
 boost_library(
