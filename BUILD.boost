@@ -1307,6 +1307,7 @@ boost_library(
     hdrs = [
         "boost/compressed_pair.hpp",
         "boost/next_prior.hpp",
+        "boost/call_traits.hpp",
     ],
     deps = [
         ":config",
@@ -1370,6 +1371,9 @@ boost_library(
 
 boost_library(
     name = "numeric",
+    deps = [
+        ":typeof",
+    ],
 )
 
 boost_library(
