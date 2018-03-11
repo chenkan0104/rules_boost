@@ -1433,6 +1433,10 @@ boost_library(
 )
 
 boost_library(
+    name = "lambda",
+)
+
+boost_library(
     name = "test",
     exclude_src = glob(["libs/test/src/*.cpp"]),
     deps = [
