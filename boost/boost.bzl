@@ -89,6 +89,7 @@ def boost_deps():
         sha256 = "a2848f34fcd5d6cf47def00461fcb528a0484d8edef8208d6d2e2909dc61d9cd",
         strip_prefix = "bzip2-1.0.6",
         url = [
+            "http://z.gs-robot.com/bzip2/bzip2-1.0.6.tar.gz",
             "http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz",
         ]
     )
@@ -100,6 +101,7 @@ def boost_deps():
         sha256 = "71928b357d0a09a12a4b4c5fafca8c31c19b0e7d3b8ebb19622e96f26dbf28cb",
         strip_prefix = "xz-5.2.3",
         urls = [
+          "http://z.gs-robot.com/lzma/xz-5.2.3.tar.gz",
           "https://phoenixnap.dl.sourceforge.net/project/lzmautils/xz-5.2.3.tar.gz",
           "https://newcontinuum.dl.sourceforge.net/project/lzmautils/xz-5.2.3.tar.gz",
           "http://cfhcable.dl.sourceforge.net/project/lzmautils/xz-5.2.3.tar.gz",
