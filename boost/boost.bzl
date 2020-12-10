@@ -76,7 +76,10 @@ def boost_deps():
         build_file = "@com_github_nelhage_rules_boost//:BUILD.zlib",
         sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
         strip_prefix = "zlib-1.2.11",
-        url = "https://zlib.net/zlib-1.2.11.tar.gz",
+        url = [
+            "http://z.gs-robot.com/zlib/zlib-1.2.11.tar.gz",
+            "https://zlib.net/zlib-1.2.11.tar.gz",
+        ]
     )
 
   if "org_bzip_bzip2" not in native.existing_rules():
@@ -85,7 +88,9 @@ def boost_deps():
         build_file = "@com_github_nelhage_rules_boost//:BUILD.bzip2",
         sha256 = "a2848f34fcd5d6cf47def00461fcb528a0484d8edef8208d6d2e2909dc61d9cd",
         strip_prefix = "bzip2-1.0.6",
-        url = "http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz",
+        url = [
+            "http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz",
+        ]
     )
 
   if "org_lzma_lzma" not in native.existing_rules():
