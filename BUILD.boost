@@ -208,7 +208,7 @@ boost_library(
         ":date_time",
         ":regex",
         ":coroutine",
-        "//external:openssl",
+        "@openssl//:openssl",
     ],
 )
 

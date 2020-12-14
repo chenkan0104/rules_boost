@@ -70,6 +70,7 @@ def boost_library(name, defines=None, includes=None, hdrs=None, srcs=None,
   )
 
 def boost_deps():
+
   if "net_zlib_zlib" not in native.existing_rules():
     http_archive(
         name = "net_zlib_zlib",
@@ -116,6 +117,16 @@ def boost_deps():
         ]
     )
 
+  if "openssl" not in native.existing_rules():
+    http_archive(
+        name = "openssl",
+        urls = ["http://z.gs-robot.com/openssl/openssl-1.1.1h.tar.gz"],
+        sha256 = "5c9ca8774bd7b03e5784f26ae9e9e6d749c9da2438545077e6b3d755a06595d9",
+        strip_prefix = "openssl-1.1.1h",
+        build_file = "@com_github_nelhage_rules_boost//:BUILD.openssl",
+        workspace_file = "@com_github_nelhage_rules_boost//:WORKSPACE.openssl"
+    )
+
   if "boost" not in native.existing_rules():
     http_archive(
       name = "boost",
@@ -127,3 +138,4 @@ def boost_deps():
       strip_prefix = "boost_1_66_0/",
       sha256 = "bd0df411efd9a585e5a2212275f8762079fed8842264954675a4fddc46cfcf60",
     )
+
