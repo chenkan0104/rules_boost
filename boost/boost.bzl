@@ -70,13 +70,17 @@ def boost_library(name, defines=None, includes=None, hdrs=None, srcs=None,
   )
 
 def boost_deps():
+
   if "net_zlib_zlib" not in native.existing_rules():
     http_archive(
         name = "net_zlib_zlib",
         build_file = "@com_github_nelhage_rules_boost//:BUILD.zlib",
         sha256 = "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1",
         strip_prefix = "zlib-1.2.11",
-        url = "https://zlib.net/zlib-1.2.11.tar.gz",
+        urls = [
+            "http://z.gs-robot.com/zlib/zlib-1.2.11.tar.gz",
+            "https://zlib.net/zlib-1.2.11.tar.gz",
+        ]
     )
 
   if "org_bzip_bzip2" not in native.existing_rules():
@@ -85,7 +89,10 @@ def boost_deps():
         build_file = "@com_github_nelhage_rules_boost//:BUILD.bzip2",
         sha256 = "a2848f34fcd5d6cf47def00461fcb528a0484d8edef8208d6d2e2909dc61d9cd",
         strip_prefix = "bzip2-1.0.6",
-        url = "http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz",
+        urls = [
+            "http://z.gs-robot.com/bzip2/bzip2-1.0.6.tar.gz",
+            "http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz",
+        ]
     )
 
   if "org_lzma_lzma" not in native.existing_rules():
@@ -95,6 +102,7 @@ def boost_deps():
         sha256 = "71928b357d0a09a12a4b4c5fafca8c31c19b0e7d3b8ebb19622e96f26dbf28cb",
         strip_prefix = "xz-5.2.3",
         urls = [
+          "http://z.gs-robot.com/lzma/xz-5.2.3.tar.gz",
           "https://phoenixnap.dl.sourceforge.net/project/lzmautils/xz-5.2.3.tar.gz",
           "https://newcontinuum.dl.sourceforge.net/project/lzmautils/xz-5.2.3.tar.gz",
           "http://cfhcable.dl.sourceforge.net/project/lzmautils/xz-5.2.3.tar.gz",
@@ -109,6 +117,16 @@ def boost_deps():
         ]
     )
 
+  if "openssl" not in native.existing_rules():
+    http_archive(
+        name = "openssl",
+        urls = ["http://z.gs-robot.com/openssl/openssl-1.1.1h.tar.gz"],
+        sha256 = "5c9ca8774bd7b03e5784f26ae9e9e6d749c9da2438545077e6b3d755a06595d9",
+        strip_prefix = "openssl-1.1.1h",
+        build_file = "@com_github_nelhage_rules_boost//:BUILD.openssl",
+        workspace_file = "@com_github_nelhage_rules_boost//:WORKSPACE.openssl"
+    )
+
   if "boost" not in native.existing_rules():
     http_archive(
       name = "boost",
@@ -120,3 +138,4 @@ def boost_deps():
       strip_prefix = "boost_1_66_0/",
       sha256 = "bd0df411efd9a585e5a2212275f8762079fed8842264954675a4fddc46cfcf60",
     )
+
